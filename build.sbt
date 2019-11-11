@@ -195,3 +195,5 @@ lazy val firechip = (project in file("generators/firechip"))
     testGrouping in Test := isolateAllTests( (definedTests in Test).value )
   )
 
+// add hardware accelerators
+lazy val simonhwacc = (project in file("generators/simon-chisel")).settings(commonSettings).dependsOn(rocketchip)
