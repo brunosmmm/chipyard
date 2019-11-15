@@ -119,10 +119,6 @@ lazy val testchipip = (project in file("generators/testchipip"))
   .dependsOn(rocketchip)
   .settings(commonSettings)
 
-lazy val example = conditionalDependsOn(project in file("generators/example"))
-  .dependsOn(boom, hwacha, sifive_blocks, sifive_cache, utilities, sha3)
-  .settings(commonSettings)
-
 lazy val tracegen = conditionalDependsOn(project in file("generators/tracegen"))
   .dependsOn(rocketchip, sifive_cache)
   .settings(commonSettings)
@@ -196,4 +192,8 @@ lazy val firechip = (project in file("generators/firechip"))
   )
 
 // add hardware accelerators
-lazy val simonhwacc = (project in file("generators/simon-chisel")).settings(commonSettings).dependsOn(rocketchip)
+lazy val SimonAcc = (project in file("generators/simon-chisel")).settings(commonSettings).dependsOn(rocketchip)
+
+lazy val example = conditionalDependsOn(project in file("generators/example"))
+  .dependsOn(boom, hwacha, sifive_blocks, sifive_cache, utilities, sha3, SimonAcc)
+  .settings(commonSettings)

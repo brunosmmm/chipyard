@@ -9,6 +9,7 @@ import freechips.rocketchip.devices.tilelink._
 import freechips.rocketchip.util.DontTouch
 
 import testchipip._
+import SimonAcc._
 
 import utilities.{System, SystemModule}
 
@@ -101,3 +102,12 @@ class TopWithInitZero(implicit p: Parameters) extends Top
 class TopWithInitZeroModuleImp(l: TopWithInitZero) extends TopModule(l)
   with HasPeripheryInitZeroModuleImp
 // DOC include end: TopWithInitZero
+
+class TopWithSimonTL(implicit p: Parameters) extends Top
+    with HasPeripherySimonTL {
+  override lazy val module = new TopWithSimonTLModule(this)
+}
+
+class TopWithSimonTLModule(l: TopWithSimonTL) extends TopModule(l)
+    with HasPeripherySimonTLModuleImp
+

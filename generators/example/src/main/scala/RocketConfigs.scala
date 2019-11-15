@@ -141,3 +141,12 @@ class InitZeroRocketConfig extends Config(
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   new freechips.rocketchip.system.BaseConfig)
 // DOC include end: InitZeroRocketConfig
+
+class SimonRocketConfig extends Config(
+  new WithSimonTop ++
+    new WithSimonRoCC ++
+    new WithBootROM ++ 
+    new freechips.rocketchip.subsystem.WithInclusiveCache ++
+    new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+    new freechips.rocketchip.system.BaseConfig
+)

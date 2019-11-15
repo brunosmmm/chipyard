@@ -182,3 +182,14 @@ class WithInitZeroTop extends Config((site, here, up) => {
     Module(LazyModule(new TopWithInitZero()(p)).module)
 })
 // DOC include end: WithInitZero
+class WithSimonTop extends Config((site, here, up) =>
+  {
+    case BuildTop => (clock: Clock, reset: Bool, p: Parameters) =>
+      Module(LazyModule(new TopWithSimonTL()(p)).module)
+  })
+
+class WithSimonRoCC extends Config((site, here, up) =>
+  {
+    case BuildRoCC => Seq((p: Parameters) => LazyModule(
+                            new simonRoCC(OpcodeSet.custom0)(p)))
+  })
