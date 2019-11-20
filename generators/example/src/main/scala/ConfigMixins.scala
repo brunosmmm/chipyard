@@ -4,10 +4,10 @@ import chisel3._
 import chisel3.util.{log2Up}
 
 import freechips.rocketchip.config.{Field, Parameters, Config}
-import freechips.rocketchip.subsystem.{RocketTilesKey, WithRoccExample, WithNMemoryChannels, WithNBigCores, WithRV32}
+import freechips.rocketchip.subsystem.{RocketTilesKey, WithRoccExample, WithNMemoryChannels, WithNBigCores, WithRV32, BaseSubsystem}
 import freechips.rocketchip.diplomacy.{LazyModule, ValName}
 import freechips.rocketchip.devices.tilelink.BootROMParams
-import freechips.rocketchip.tile.{XLen, BuildRoCC, TileKey, LazyRoCC}
+import freechips.rocketchip.tile.{XLen, BuildRoCC, TileKey, LazyRoCC, OpcodeSet, AccumulatorExample}
 
 import boom.common.{BoomTilesKey}
 
@@ -24,6 +24,8 @@ object ConfigValName {
   implicit val valName = ValName("TestHarness")
 }
 import ConfigValName._
+
+import SimonAcc._
 
 // -----------------------
 // Common Parameter Mixins
@@ -188,8 +190,18 @@ class WithSimonTop extends Config((site, here, up) =>
       Module(LazyModule(new TopWithSimonTL()(p)).module)
   })
 
-class WithSimonRoCC extends Config((site, here, up) =>
+class WithSimonToosly extends Config((site, here, up) =>
+  {
+    case BuildRoCC => Seq(
+      (p: Parameters) =>
+      LazyModule(new SimonToosly(OpcodeSet.custom1)(p)),
+      (p: Parameters) =>
+      LazyModule(new SimonRoCC(OpcodeSet.custom0)(p))
+    )
+  })
+
+class WithAccumulator extends Config((site, here, up) =>
   {
     case BuildRoCC => Seq((p: Parameters) => LazyModule(
-                            new simonRoCC(OpcodeSet.custom0)(p)))
+                            new AccumulatorExample(OpcodeSet.custom0)(p)))
   })
