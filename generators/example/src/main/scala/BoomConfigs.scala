@@ -57,3 +57,13 @@ class SmallRV32BoomConfig extends Config(
   new boom.common.WithSmallBooms ++
   new boom.common.WithNBoomCores(1) ++
   new freechips.rocketchip.system.BaseConfig)
+
+class SimonBoomConfig extends Config(
+  new WithSimonTop ++
+    new WithSimonToosly ++
+    //new sha3.WithSha3Accel ++                                // add SHA3 rocc accelerator
+    new WithBootROM ++
+    new freechips.rocketchip.subsystem.WithInclusiveCache ++
+    new boom.common.WithMediumBooms ++                        // 2-wide BOOM
+    new boom.common.WithNBoomCores(1) ++
+    new freechips.rocketchip.system.BaseConfig)
